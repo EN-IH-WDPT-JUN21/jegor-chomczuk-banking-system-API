@@ -7,16 +7,18 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
+@MappedSuperclass
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class ThirdParty{
+@AllArgsConstructor
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "hashed_key")
-    private String hashedKey;
+    @Column(name = "user_name")
+    private String userName;
+
+    private String password;
 }

@@ -1,7 +1,7 @@
 package com.ironhack.BankingSystem.dao.transaction;
 
 import com.ironhack.BankingSystem.dao.accounts.Account;
-import com.ironhack.BankingSystem.dao.users.AccountHolder;
+import com.ironhack.BankingSystem.dao.users.ThirdParty;
 import com.ironhack.BankingSystem.utils.Money;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "transaction")
-public class Transaction {
+@Table(name = "third_party_transaction")
+public class ThirdPartyTransaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +28,10 @@ public class Transaction {
     private Account account;
 
     @ManyToOne
-    @JoinColumn(name = "account_holder_id")
-    AccountHolder accountHolder;
+    @JoinColumn(name = "third_party_id")
+    ThirdParty thirdParty;
 
-    @Column(name="time_stamp")
+    @Column(name = "time_stamp")
     private LocalDateTime timeStamp;
 
     private Money amount;

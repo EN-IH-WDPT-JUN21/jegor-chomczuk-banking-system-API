@@ -1,1131 +1,834 @@
 
+    create table account (
+       id bigint not null auto_increment,
+        balance decimal(19,2),
+        penalty_fee decimal(19,2),
+        primary_owner_id bigint,
+        secondary_owner_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+
     create table account_holder (
-       account_holder_id bigint not null auto_increment,
-        name varchar(255),
+       id bigint not null auto_increment,
+        password varchar(255),
+        user_name varchar(255),
         date_of_birth datetime(6),
         mailing_address varchar(255),
         primary_address varchar(255),
-        primary key (account_holder_id)
+        primary key (id)
     ) engine=InnoDB
 
     create table admin (
-       account_holder_id bigint not null auto_increment,
-        name varchar(255),
-        primary key (account_holder_id)
+       id bigint not null auto_increment,
+        password varchar(255),
+        user_name varchar(255),
+        primary key (id)
     ) engine=InnoDB
 
     create table checking (
-       checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        monthly_maintenance_fee_currency varchar(255),
-        monthly_maintenance_fee_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+       creation_date datetime(6),
+        minimum_balance decimal(19,2),
+        monthly_maintenance_fee decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (checking_id)
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table credit_card (
-       credit_card_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        credit_limit_currency varchar(255),
-        credit_limit_value decimal(19,2),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (credit_card_id)
+       credit_limit decimal(19,2),
+        interest_rate decimal(19,2),
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table savings (
-       savings_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+       creation_date datetime(6),
+        interest_rate decimal(19,2),
+        minimum_balance decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (savings_id)
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table student_checking (
-       student_checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+       creation_date datetime(6),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (student_checking_id)
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
-    create table third_party (
-       account_holder_id bigint not null auto_increment,
-        name varchar(255),
-        key varchar(255),
-        primary key (account_holder_id)
-    ) engine=InnoDB
-
-    alter table checking 
-       add constraint FK7eft4ijchaknf4n8v7ygd89oc 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table checking 
-       add constraint FKos56augfo6m9nvquwt5xpdpv2 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table credit_card 
-       add constraint FK64ykaeny0boc49vl9loffcir0 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table credit_card 
-       add constraint FKg6qinxhdaj4f13ktfd5rj0w5r 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table savings 
-       add constraint FKjh4kjg6o822t3atskxa8bilep 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table savings 
-       add constraint FKe0wd1n8kopkrm3iohar81a3et 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table student_checking 
-       add constraint FKt73r1lo5un9krqna2rhvgmw0k 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table student_checking 
-       add constraint FKpwcy1lllfwcdv8uk45i2f1r9w 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
-
-    create table account_holder (
-       account_holder_id bigint not null auto_increment,
-        name varchar(255),
-        date_of_birth datetime(6),
-        mailing_address varchar(255),
-        primary_address varchar(255),
-        primary key (account_holder_id)
-    ) engine=InnoDB
-
-    create table admin (
-       account_holder_id bigint not null auto_increment,
-        name varchar(255),
-        primary key (account_holder_id)
-    ) engine=InnoDB
-
-    create table checking (
-       checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        monthly_maintenance_fee_currency varchar(255),
-        monthly_maintenance_fee_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        secret_key varchar(255),
-        status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (checking_id)
-    ) engine=InnoDB
-
-    create table credit_card (
-       credit_card_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        credit_limit_currency varchar(255),
-        credit_limit_value decimal(19,2),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (credit_card_id)
-    ) engine=InnoDB
-
-    create table savings (
-       savings_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        secret_key varchar(255),
-        status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (savings_id)
-    ) engine=InnoDB
-
-    create table student_checking (
-       student_checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        secret_key varchar(255),
-        status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (student_checking_id)
-    ) engine=InnoDB
-
-    create table third_party (
-       account_holder_id bigint not null auto_increment,
-        name varchar(255),
-        key varchar(255),
-        primary key (account_holder_id)
-    ) engine=InnoDB
-
-    alter table checking 
-       add constraint FK7eft4ijchaknf4n8v7ygd89oc 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table checking 
-       add constraint FKos56augfo6m9nvquwt5xpdpv2 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table credit_card 
-       add constraint FK64ykaeny0boc49vl9loffcir0 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table credit_card 
-       add constraint FKg6qinxhdaj4f13ktfd5rj0w5r 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table savings 
-       add constraint FKjh4kjg6o822t3atskxa8bilep 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table savings 
-       add constraint FKe0wd1n8kopkrm3iohar81a3et 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table student_checking 
-       add constraint FKt73r1lo5un9krqna2rhvgmw0k 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table student_checking 
-       add constraint FKpwcy1lllfwcdv8uk45i2f1r9w 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
-
-    create table account_holder (
-       account_holder_id bigint not null auto_increment,
-        name varchar(255),
-        date_of_birth datetime(6),
-        mailing_address varchar(255),
-        primary_address varchar(255),
-        primary key (account_holder_id)
-    ) engine=InnoDB
-
-    create table admin (
-       account_holder_id bigint not null auto_increment,
-        name varchar(255),
-        primary key (account_holder_id)
-    ) engine=InnoDB
-
-    create table checking (
-       checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        monthly_maintenance_fee_currency varchar(255),
-        monthly_maintenance_fee_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        secret_key varchar(255),
-        status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (checking_id)
-    ) engine=InnoDB
-
-    create table credit_card (
-       credit_card_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        credit_limit_currency varchar(255),
-        credit_limit_value decimal(19,2),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (credit_card_id)
-    ) engine=InnoDB
-
-    create table savings (
-       savings_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        secret_key varchar(255),
-        status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (savings_id)
-    ) engine=InnoDB
-
-    create table student_checking (
-       student_checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        secret_key varchar(255),
-        status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (student_checking_id)
-    ) engine=InnoDB
-
-    create table third_party (
-       account_holder_id bigint not null auto_increment,
-        name varchar(255),
-        key varchar(255),
-        primary key (account_holder_id)
-    ) engine=InnoDB
-
-    alter table checking 
-       add constraint FK7eft4ijchaknf4n8v7ygd89oc 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table checking 
-       add constraint FKos56augfo6m9nvquwt5xpdpv2 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table credit_card 
-       add constraint FK64ykaeny0boc49vl9loffcir0 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table credit_card 
-       add constraint FKg6qinxhdaj4f13ktfd5rj0w5r 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table savings 
-       add constraint FKjh4kjg6o822t3atskxa8bilep 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table savings 
-       add constraint FKe0wd1n8kopkrm3iohar81a3et 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table student_checking 
-       add constraint FKt73r1lo5un9krqna2rhvgmw0k 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table student_checking 
-       add constraint FKpwcy1lllfwcdv8uk45i2f1r9w 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
-
-    create table account_holder (
-       account_holder_id bigint not null auto_increment,
-        date_of_birth datetime(6),
-        mailing_address varchar(255),
-        primary_address varchar(255),
-        primary key (account_holder_id)
-    ) engine=InnoDB
-
-    create table admin (
-       admin_id bigint not null auto_increment,
-        name varchar(255),
-        primary key (admin_id)
-    ) engine=InnoDB
-
-    create table checking (
-       checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        monthly_maintenance_fee_currency varchar(255),
-        monthly_maintenance_fee_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        secret_key varchar(255),
-        status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (checking_id)
-    ) engine=InnoDB
-
-    create table credit_card (
-       credit_card_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        credit_limit_currency varchar(255),
-        credit_limit_value decimal(19,2),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (credit_card_id)
-    ) engine=InnoDB
-
-    create table savings (
-       savings_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        secret_key varchar(255),
-        status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (savings_id)
-    ) engine=InnoDB
-
-    create table student_checking (
-       student_checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        secret_key varchar(255),
-        status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (student_checking_id)
+    create table third_party_transaction (
+       id bigint not null auto_increment,
+        amount decimal(19,2),
+        currency varchar(255),
+        time_stamp datetime(6),
+        account_id bigint,
+        third_party_id bigint,
+        primary key (id)
     ) engine=InnoDB
 
     create table third_party (
        id bigint not null auto_increment,
-        key varchar(255),
+        hashed_key varchar(255),
         primary key (id)
     ) engine=InnoDB
 
-    alter table checking 
-       add constraint FK7eft4ijchaknf4n8v7ygd89oc 
+    create table transaction (
+       id bigint not null auto_increment,
+        amount decimal(19,2),
+        currency varchar(255),
+        time_stamp datetime(6),
+        account_id bigint,
+        account_holder_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table account 
+       add constraint FKeb4hr0wmc9ab52ulodr1dcoq2 
        foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
+       references account_holder (id)
+
+    alter table account 
+       add constraint FKa4ukcqpfubnnuxjp9sqwfvj1c 
+       foreign key (secondary_owner_id) 
+       references account_holder (id)
 
     alter table checking 
-       add constraint FKos56augfo6m9nvquwt5xpdpv2 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FK4pww71v1myyn2iai6qm84t29o 
+       foreign key (id) 
+       references account (id)
 
     alter table credit_card 
-       add constraint FK64ykaeny0boc49vl9loffcir0 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table credit_card 
-       add constraint FKg6qinxhdaj4f13ktfd5rj0w5r 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FK5nn2ykrc28pst4v0axopldeqv 
+       foreign key (id) 
+       references account (id)
 
     alter table savings 
-       add constraint FKjh4kjg6o822t3atskxa8bilep 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table savings 
-       add constraint FKe0wd1n8kopkrm3iohar81a3et 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FKs02t0s57xrunyqosm96vrttin 
+       foreign key (id) 
+       references account (id)
 
     alter table student_checking 
-       add constraint FKt73r1lo5un9krqna2rhvgmw0k 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FKcw2ja1qwe1e6xhuj4e1o9jvy6 
+       foreign key (id) 
+       references account (id)
 
-    alter table student_checking 
-       add constraint FKpwcy1lllfwcdv8uk45i2f1r9w 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+    alter table third_party_transaction 
+       add constraint FKe28y5qlshns7j4pf5sp70n6t8 
+       foreign key (account_id) 
+       references account (id)
+
+    alter table third_party_transaction 
+       add constraint FKjldacw60ivde7a2x85atdp1ms 
+       foreign key (third_party_id) 
+       references third_party (id)
+
+    alter table transaction 
+       add constraint FK6g20fcr3bhr6bihgy24rq1r1b 
+       foreign key (account_id) 
+       references account (id)
+
+    alter table transaction 
+       add constraint FKm7i4ms72y7b44q8ymvcul6ke6 
+       foreign key (account_holder_id) 
+       references account_holder (id)
+
+    create table account (
+       id bigint not null auto_increment,
+        balance decimal(19,2),
+        penalty_fee decimal(19,2),
+        primary_owner_id bigint,
+        secondary_owner_id bigint,
+        primary key (id)
+    ) engine=InnoDB
 
     create table account_holder (
-       account_holder_id bigint not null auto_increment,
+       id bigint not null auto_increment,
+        password varchar(255),
+        user_name varchar(255),
         date_of_birth datetime(6),
         mailing_address varchar(255),
         primary_address varchar(255),
-        primary key (account_holder_id)
+        primary key (id)
     ) engine=InnoDB
 
     create table admin (
-       admin_id bigint not null auto_increment,
-        name varchar(255),
-        primary key (admin_id)
+       id bigint not null auto_increment,
+        password varchar(255),
+        user_name varchar(255),
+        primary key (id)
     ) engine=InnoDB
 
     create table checking (
-       checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        monthly_maintenance_fee_currency varchar(255),
-        monthly_maintenance_fee_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+       creation_date datetime(6),
+        minimum_balance decimal(19,2),
+        monthly_maintenance_fee decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (checking_id)
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table credit_card (
-       credit_card_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        credit_limit_currency varchar(255),
-        credit_limit_value decimal(19,2),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (credit_card_id)
+       credit_limit decimal(19,2),
+        interest_rate decimal(19,2),
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table savings (
-       savings_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+       creation_date datetime(6),
+        interest_rate decimal(19,2),
+        minimum_balance decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (savings_id)
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table student_checking (
-       student_checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+       creation_date datetime(6),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (student_checking_id)
+        id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table third_party_transaction (
+       id bigint not null auto_increment,
+        amount decimal(19,2),
+        currency varchar(255),
+        time_stamp datetime(6),
+        account_id bigint,
+        third_party_id bigint,
+        primary key (id)
     ) engine=InnoDB
 
     create table third_party (
        id bigint not null auto_increment,
-        key varchar(255),
+        hashed_key varchar(255),
         primary key (id)
     ) engine=InnoDB
 
-    alter table checking 
-       add constraint FK7eft4ijchaknf4n8v7ygd89oc 
+    create table transaction (
+       id bigint not null auto_increment,
+        amount decimal(19,2),
+        currency varchar(255),
+        time_stamp datetime(6),
+        account_id bigint,
+        account_holder_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table account 
+       add constraint FKeb4hr0wmc9ab52ulodr1dcoq2 
        foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
+       references account_holder (id)
+
+    alter table account 
+       add constraint FKa4ukcqpfubnnuxjp9sqwfvj1c 
+       foreign key (secondary_owner_id) 
+       references account_holder (id)
 
     alter table checking 
-       add constraint FKos56augfo6m9nvquwt5xpdpv2 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FK4pww71v1myyn2iai6qm84t29o 
+       foreign key (id) 
+       references account (id)
 
     alter table credit_card 
-       add constraint FK64ykaeny0boc49vl9loffcir0 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table credit_card 
-       add constraint FKg6qinxhdaj4f13ktfd5rj0w5r 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FK5nn2ykrc28pst4v0axopldeqv 
+       foreign key (id) 
+       references account (id)
 
     alter table savings 
-       add constraint FKjh4kjg6o822t3atskxa8bilep 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table savings 
-       add constraint FKe0wd1n8kopkrm3iohar81a3et 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FKs02t0s57xrunyqosm96vrttin 
+       foreign key (id) 
+       references account (id)
 
     alter table student_checking 
-       add constraint FKt73r1lo5un9krqna2rhvgmw0k 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FKcw2ja1qwe1e6xhuj4e1o9jvy6 
+       foreign key (id) 
+       references account (id)
 
-    alter table student_checking 
-       add constraint FKpwcy1lllfwcdv8uk45i2f1r9w 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+    alter table third_party_transaction 
+       add constraint FKe28y5qlshns7j4pf5sp70n6t8 
+       foreign key (account_id) 
+       references account (id)
+
+    alter table third_party_transaction 
+       add constraint FKjldacw60ivde7a2x85atdp1ms 
+       foreign key (third_party_id) 
+       references third_party (id)
+
+    alter table transaction 
+       add constraint FK6g20fcr3bhr6bihgy24rq1r1b 
+       foreign key (account_id) 
+       references account (id)
+
+    alter table transaction 
+       add constraint FKm7i4ms72y7b44q8ymvcul6ke6 
+       foreign key (account_holder_id) 
+       references account_holder (id)
+
+    create table account (
+       id bigint not null auto_increment,
+        balance decimal(19,2),
+        penalty_fee decimal(19,2),
+        primary_owner_id bigint,
+        secondary_owner_id bigint,
+        primary key (id)
+    ) engine=InnoDB
 
     create table account_holder (
-       account_holder_id bigint not null auto_increment,
+       id bigint not null auto_increment,
+        password varchar(255),
+        user_name varchar(255),
         date_of_birth datetime(6),
         mailing_address varchar(255),
         primary_address varchar(255),
-        primary key (account_holder_id)
+        primary key (id)
     ) engine=InnoDB
 
     create table admin (
-       admin_id bigint not null auto_increment,
-        name varchar(255),
-        primary key (admin_id)
+       id bigint not null auto_increment,
+        password varchar(255),
+        user_name varchar(255),
+        primary key (id)
     ) engine=InnoDB
 
     create table checking (
-       checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        monthly_maintenance_fee_currency varchar(255),
-        monthly_maintenance_fee_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+       creation_date datetime(6),
+        minimum_balance decimal(19,2),
+        monthly_maintenance_fee decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (checking_id)
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table credit_card (
-       credit_card_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        credit_limit_currency varchar(255),
-        credit_limit_value decimal(19,2),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (credit_card_id)
+       credit_limit decimal(19,2),
+        interest_rate decimal(19,2),
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table savings (
-       savings_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+       creation_date datetime(6),
+        interest_rate decimal(19,2),
+        minimum_balance decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (savings_id)
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table student_checking (
-       student_checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        creation_date datetime(6),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+       creation_date datetime(6),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (student_checking_id)
+        id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table third_party_transaction (
+       id bigint not null auto_increment,
+        amount decimal(19,2),
+        currency varchar(255),
+        time_stamp datetime(6),
+        account_id bigint,
+        third_party_id bigint,
+        primary key (id)
     ) engine=InnoDB
 
     create table third_party (
        id bigint not null auto_increment,
-        key varchar(255),
+        hashed_key varchar(255),
         primary key (id)
     ) engine=InnoDB
 
-    alter table checking 
-       add constraint FK7eft4ijchaknf4n8v7ygd89oc 
+    create table transaction (
+       id bigint not null auto_increment,
+        amount decimal(19,2),
+        currency varchar(255),
+        time_stamp datetime(6),
+        account_id bigint,
+        account_holder_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table account 
+       add constraint FKeb4hr0wmc9ab52ulodr1dcoq2 
        foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
+       references account_holder (id)
+
+    alter table account 
+       add constraint FKa4ukcqpfubnnuxjp9sqwfvj1c 
+       foreign key (secondary_owner_id) 
+       references account_holder (id)
 
     alter table checking 
-       add constraint FKos56augfo6m9nvquwt5xpdpv2 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FK4pww71v1myyn2iai6qm84t29o 
+       foreign key (id) 
+       references account (id)
 
     alter table credit_card 
-       add constraint FK64ykaeny0boc49vl9loffcir0 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table credit_card 
-       add constraint FKg6qinxhdaj4f13ktfd5rj0w5r 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FK5nn2ykrc28pst4v0axopldeqv 
+       foreign key (id) 
+       references account (id)
 
     alter table savings 
-       add constraint FKjh4kjg6o822t3atskxa8bilep 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table savings 
-       add constraint FKe0wd1n8kopkrm3iohar81a3et 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FKs02t0s57xrunyqosm96vrttin 
+       foreign key (id) 
+       references account (id)
 
     alter table student_checking 
-       add constraint FKt73r1lo5un9krqna2rhvgmw0k 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FKcw2ja1qwe1e6xhuj4e1o9jvy6 
+       foreign key (id) 
+       references account (id)
 
-    alter table student_checking 
-       add constraint FKpwcy1lllfwcdv8uk45i2f1r9w 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+    alter table third_party_transaction 
+       add constraint FKe28y5qlshns7j4pf5sp70n6t8 
+       foreign key (account_id) 
+       references account (id)
+
+    alter table third_party_transaction 
+       add constraint FKjldacw60ivde7a2x85atdp1ms 
+       foreign key (third_party_id) 
+       references third_party (id)
+
+    alter table transaction 
+       add constraint FK6g20fcr3bhr6bihgy24rq1r1b 
+       foreign key (account_id) 
+       references account (id)
+
+    alter table transaction 
+       add constraint FKm7i4ms72y7b44q8ymvcul6ke6 
+       foreign key (account_holder_id) 
+       references account_holder (id)
+
+    create table account (
+       id bigint not null auto_increment,
+        penalty_fee decimal(19,2),
+        primary_owner_id bigint,
+        secondary_owner_id bigint,
+        primary key (id)
+    ) engine=InnoDB
 
     create table account_holder (
-       account_holder_id bigint not null auto_increment,
+       id bigint not null auto_increment,
+        password varchar(255),
+        user_name varchar(255),
         date_of_birth datetime(6),
         mailing_address varchar(255),
         primary_address varchar(255),
-        primary key (account_holder_id)
+        primary key (id)
     ) engine=InnoDB
 
     create table admin (
-       admin_id bigint not null auto_increment,
-        name varchar(255),
-        primary key (admin_id)
+       id bigint not null auto_increment,
+        password varchar(255),
+        user_name varchar(255),
+        primary key (id)
     ) engine=InnoDB
 
     create table checking (
-       checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
+       balance decimal(19,2),
         creation_date datetime(6),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        monthly_maintenance_fee_currency varchar(255),
-        monthly_maintenance_fee_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+        minimum_balance decimal(19,2),
+        monthly_maintenance_fee decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (checking_id)
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table credit_card (
-       credit_card_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        credit_limit_currency varchar(255),
-        credit_limit_value decimal(19,2),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (credit_card_id)
+       balance decimal(19,2),
+        credit_limit decimal(19,2),
+        interest_rate decimal(19,2),
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table savings (
-       savings_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
+       balance decimal(19,2),
         creation_date datetime(6),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+        interest_rate decimal(19,2),
+        minimum_balance decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (savings_id)
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table student_checking (
-       student_checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
+       balance decimal(19,2),
         creation_date datetime(6),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (student_checking_id)
+        id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table third_party_transaction (
+       id bigint not null auto_increment,
+        amount decimal(19,2),
+        currency varchar(255),
+        time_stamp datetime(6),
+        account_id bigint,
+        third_party_id bigint,
+        primary key (id)
     ) engine=InnoDB
 
     create table third_party (
        id bigint not null auto_increment,
-        key varchar(255),
+        hashed_key varchar(255),
         primary key (id)
     ) engine=InnoDB
 
-    alter table checking 
-       add constraint FK7eft4ijchaknf4n8v7ygd89oc 
+    create table transaction (
+       id bigint not null auto_increment,
+        amount decimal(19,2),
+        currency varchar(255),
+        time_stamp datetime(6),
+        account_id bigint,
+        account_holder_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table account 
+       add constraint FKeb4hr0wmc9ab52ulodr1dcoq2 
        foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
+       references account_holder (id)
+
+    alter table account 
+       add constraint FKa4ukcqpfubnnuxjp9sqwfvj1c 
+       foreign key (secondary_owner_id) 
+       references account_holder (id)
 
     alter table checking 
-       add constraint FKos56augfo6m9nvquwt5xpdpv2 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FK4pww71v1myyn2iai6qm84t29o 
+       foreign key (id) 
+       references account (id)
 
     alter table credit_card 
-       add constraint FK64ykaeny0boc49vl9loffcir0 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table credit_card 
-       add constraint FKg6qinxhdaj4f13ktfd5rj0w5r 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FK5nn2ykrc28pst4v0axopldeqv 
+       foreign key (id) 
+       references account (id)
 
     alter table savings 
-       add constraint FKjh4kjg6o822t3atskxa8bilep 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table savings 
-       add constraint FKe0wd1n8kopkrm3iohar81a3et 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FKs02t0s57xrunyqosm96vrttin 
+       foreign key (id) 
+       references account (id)
 
     alter table student_checking 
-       add constraint FKt73r1lo5un9krqna2rhvgmw0k 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FKcw2ja1qwe1e6xhuj4e1o9jvy6 
+       foreign key (id) 
+       references account (id)
 
-    alter table student_checking 
-       add constraint FKpwcy1lllfwcdv8uk45i2f1r9w 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+    alter table third_party_transaction 
+       add constraint FKe28y5qlshns7j4pf5sp70n6t8 
+       foreign key (account_id) 
+       references account (id)
+
+    alter table third_party_transaction 
+       add constraint FKjldacw60ivde7a2x85atdp1ms 
+       foreign key (third_party_id) 
+       references third_party (id)
+
+    alter table transaction 
+       add constraint FK6g20fcr3bhr6bihgy24rq1r1b 
+       foreign key (account_id) 
+       references account (id)
+
+    alter table transaction 
+       add constraint FKm7i4ms72y7b44q8ymvcul6ke6 
+       foreign key (account_holder_id) 
+       references account_holder (id)
+
+    create table account (
+       id bigint not null auto_increment,
+        penalty_fee decimal(19,2),
+        primary_owner_id bigint,
+        secondary_owner_id bigint,
+        primary key (id)
+    ) engine=InnoDB
 
     create table account_holder (
-       account_holder_id bigint not null auto_increment,
+       id bigint not null auto_increment,
+        password varchar(255),
+        user_name varchar(255),
         date_of_birth datetime(6),
         mailing_address varchar(255),
         primary_address varchar(255),
-        primary key (account_holder_id)
+        primary key (id)
     ) engine=InnoDB
 
     create table admin (
-       admin_id bigint not null auto_increment,
-        name varchar(255),
-        primary key (admin_id)
+       id bigint not null auto_increment,
+        password varchar(255),
+        user_name varchar(255),
+        primary key (id)
     ) engine=InnoDB
 
     create table checking (
-       checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
+       balance decimal(19,2),
         creation_date datetime(6),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        monthly_maintenance_fee_currency varchar(255),
-        monthly_maintenance_fee_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+        minimum_balance decimal(19,2),
+        monthly_maintenance_fee decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (checking_id)
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table credit_card (
-       credit_card_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        credit_limit_currency varchar(255),
-        credit_limit_value decimal(19,2),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (credit_card_id)
+       balance decimal(19,2),
+        credit_limit decimal(19,2),
+        interest_rate decimal(19,2),
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table savings (
-       savings_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
+       balance decimal(19,2),
         creation_date datetime(6),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+        interest_rate decimal(19,2),
+        minimum_balance decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (savings_id)
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table student_checking (
-       student_checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
+       balance decimal(19,2),
         creation_date datetime(6),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (student_checking_id)
+        id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table third_party_transaction (
+       id bigint not null auto_increment,
+        amount decimal(19,2),
+        currency varchar(255),
+        time_stamp datetime(6),
+        account_id bigint,
+        third_party_id bigint,
+        primary key (id)
     ) engine=InnoDB
 
     create table third_party (
        id bigint not null auto_increment,
-        key varchar(255),
+        hashed_key varchar(255),
         primary key (id)
     ) engine=InnoDB
 
-    alter table checking 
-       add constraint FK7eft4ijchaknf4n8v7ygd89oc 
+    create table transaction (
+       id bigint not null auto_increment,
+        amount decimal(19,2),
+        currency varchar(255),
+        time_stamp datetime(6),
+        account_id bigint,
+        account_holder_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table account 
+       add constraint FKeb4hr0wmc9ab52ulodr1dcoq2 
        foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
+       references account_holder (id)
+
+    alter table account 
+       add constraint FKa4ukcqpfubnnuxjp9sqwfvj1c 
+       foreign key (secondary_owner_id) 
+       references account_holder (id)
 
     alter table checking 
-       add constraint FKos56augfo6m9nvquwt5xpdpv2 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FK4pww71v1myyn2iai6qm84t29o 
+       foreign key (id) 
+       references account (id)
 
     alter table credit_card 
-       add constraint FK64ykaeny0boc49vl9loffcir0 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table credit_card 
-       add constraint FKg6qinxhdaj4f13ktfd5rj0w5r 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FK5nn2ykrc28pst4v0axopldeqv 
+       foreign key (id) 
+       references account (id)
 
     alter table savings 
-       add constraint FKjh4kjg6o822t3atskxa8bilep 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table savings 
-       add constraint FKe0wd1n8kopkrm3iohar81a3et 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FKs02t0s57xrunyqosm96vrttin 
+       foreign key (id) 
+       references account (id)
 
     alter table student_checking 
-       add constraint FKt73r1lo5un9krqna2rhvgmw0k 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FKcw2ja1qwe1e6xhuj4e1o9jvy6 
+       foreign key (id) 
+       references account (id)
 
-    alter table student_checking 
-       add constraint FKpwcy1lllfwcdv8uk45i2f1r9w 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+    alter table third_party_transaction 
+       add constraint FKe28y5qlshns7j4pf5sp70n6t8 
+       foreign key (account_id) 
+       references account (id)
+
+    alter table third_party_transaction 
+       add constraint FKjldacw60ivde7a2x85atdp1ms 
+       foreign key (third_party_id) 
+       references third_party (id)
+
+    alter table transaction 
+       add constraint FK6g20fcr3bhr6bihgy24rq1r1b 
+       foreign key (account_id) 
+       references account (id)
+
+    alter table transaction 
+       add constraint FKm7i4ms72y7b44q8ymvcul6ke6 
+       foreign key (account_holder_id) 
+       references account_holder (id)
+
+    create table account (
+       id bigint not null auto_increment,
+        penalty_fee decimal(19,2),
+        primary_owner_id bigint,
+        secondary_owner_id bigint,
+        primary key (id)
+    ) engine=InnoDB
 
     create table account_holder (
-       account_holder_id bigint not null auto_increment,
+       id bigint not null auto_increment,
+        password varchar(255),
+        user_name varchar(255),
         date_of_birth datetime(6),
         mailing_address varchar(255),
         primary_address varchar(255),
-        primary key (account_holder_id)
+        primary key (id)
     ) engine=InnoDB
 
     create table admin (
-       admin_id bigint not null auto_increment,
-        name varchar(255),
-        primary key (admin_id)
+       id bigint not null auto_increment,
+        password varchar(255),
+        user_name varchar(255),
+        primary key (id)
     ) engine=InnoDB
 
     create table checking (
-       checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
+       balance decimal(19,2),
         creation_date datetime(6),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        monthly_maintenance_fee_currency varchar(255),
-        monthly_maintenance_fee_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+        minimum_balance decimal(19,2),
+        monthly_maintenance_fee decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (checking_id)
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table credit_card (
-       credit_card_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
-        credit_limit_currency varchar(255),
-        credit_limit_value decimal(19,2),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (credit_card_id)
+       balance decimal(19,2),
+        creation_date datetime(6),
+        credit_limit decimal(19,2),
+        interest_rate decimal(19,2),
+        last_interest_add_date datetime(6),
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table savings (
-       savings_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
+       balance decimal(19,2),
         creation_date datetime(6),
-        interest_rate_currency varchar(255),
-        interest_rate_value decimal(19,2),
-        minimum_balance_currency varchar(255),
-        minimum_balance_value decimal(19,2),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
+        interest_rate decimal(19,2),
+        last_interest_add_date datetime(6),
+        minimum_balance decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (savings_id)
+        id bigint not null,
+        primary key (id)
     ) engine=InnoDB
 
     create table student_checking (
-       student_checking_id bigint not null auto_increment,
-        balance_currency varchar(255),
-        balance_value decimal(19,2),
+       balance decimal(19,2),
         creation_date datetime(6),
-        penalty_fee_currency varchar(255),
-        penalty_fee_value decimal(19,2),
         secret_key varchar(255),
         status integer,
-        primary_owner_id bigint,
-        secondary_owner_id bigint,
-        primary key (student_checking_id)
+        id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table third_party_transaction (
+       id bigint not null auto_increment,
+        amount decimal(19,2),
+        currency varchar(255),
+        time_stamp datetime(6),
+        account_id bigint,
+        third_party_id bigint,
+        primary key (id)
     ) engine=InnoDB
 
     create table third_party (
        id bigint not null auto_increment,
-        key varchar(255),
+        hashed_key varchar(255),
         primary key (id)
     ) engine=InnoDB
 
-    alter table checking 
-       add constraint FK7eft4ijchaknf4n8v7ygd89oc 
+    create table transaction (
+       id bigint not null auto_increment,
+        amount decimal(19,2),
+        currency varchar(255),
+        time_stamp datetime(6),
+        account_id bigint,
+        account_holder_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table account 
+       add constraint FKeb4hr0wmc9ab52ulodr1dcoq2 
        foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
+       references account_holder (id)
+
+    alter table account 
+       add constraint FKa4ukcqpfubnnuxjp9sqwfvj1c 
+       foreign key (secondary_owner_id) 
+       references account_holder (id)
 
     alter table checking 
-       add constraint FKos56augfo6m9nvquwt5xpdpv2 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FK4pww71v1myyn2iai6qm84t29o 
+       foreign key (id) 
+       references account (id)
 
     alter table credit_card 
-       add constraint FK64ykaeny0boc49vl9loffcir0 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table credit_card 
-       add constraint FKg6qinxhdaj4f13ktfd5rj0w5r 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FK5nn2ykrc28pst4v0axopldeqv 
+       foreign key (id) 
+       references account (id)
 
     alter table savings 
-       add constraint FKjh4kjg6o822t3atskxa8bilep 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
-
-    alter table savings 
-       add constraint FKe0wd1n8kopkrm3iohar81a3et 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FKs02t0s57xrunyqosm96vrttin 
+       foreign key (id) 
+       references account (id)
 
     alter table student_checking 
-       add constraint FKt73r1lo5un9krqna2rhvgmw0k 
-       foreign key (primary_owner_id) 
-       references account_holder (account_holder_id)
+       add constraint FKcw2ja1qwe1e6xhuj4e1o9jvy6 
+       foreign key (id) 
+       references account (id)
 
-    alter table student_checking 
-       add constraint FKpwcy1lllfwcdv8uk45i2f1r9w 
-       foreign key (secondary_owner_id) 
-       references account_holder (account_holder_id)
+    alter table third_party_transaction 
+       add constraint FKe28y5qlshns7j4pf5sp70n6t8 
+       foreign key (account_id) 
+       references account (id)
+
+    alter table third_party_transaction 
+       add constraint FKjldacw60ivde7a2x85atdp1ms 
+       foreign key (third_party_id) 
+       references third_party (id)
+
+    alter table transaction 
+       add constraint FK6g20fcr3bhr6bihgy24rq1r1b 
+       foreign key (account_id) 
+       references account (id)
+
+    alter table transaction 
+       add constraint FKm7i4ms72y7b44q8ymvcul6ke6 
+       foreign key (account_holder_id) 
+       references account_holder (id)

@@ -1,4 +1,4 @@
-package com.ironhack.BankingSystem.dao.address;
+package com.ironhack.BankingSystem.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

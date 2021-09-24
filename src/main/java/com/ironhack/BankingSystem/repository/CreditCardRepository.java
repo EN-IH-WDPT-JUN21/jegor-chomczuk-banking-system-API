@@ -1,6 +1,6 @@
 package com.ironhack.BankingSystem.repository;
 
-import com.ironhack.BankingSystem.dao.accounnts.CreditCard;
+import com.ironhack.BankingSystem.dao.accounts.CreditCard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
