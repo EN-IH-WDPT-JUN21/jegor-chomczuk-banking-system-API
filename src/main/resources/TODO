@@ -1,3 +1,5 @@
+CRUD:
+
 The AccountHolders should be able to access their own accounts and only their accounts when passing the correct credentials using Basic Auth.
 - GET (for each account type)
 
@@ -27,3 +29,37 @@ In order to receive and send money, Third-Party Users must provide their hashed 
 
 Third-party users must be added to the database by an admin.
 - POST - create a third party
+
+///////////////////////
+
+Security
+
+///////////////////////
+
+Input validation
+
+///////////////////////
+
+Fraud detection
+
+///////////////////////
+
+Testing
+
+
+
+
+
+
+
+1. Creation of an account
+2. Transfer from account A to B
+3. Transfer from account A to B denied if there is no sufficient funds
+4. Interest rates, penalty fees are working automatically
+
+5. Clean Code
+
+6. Documentation
+
+7. Test of normal functionalities
+

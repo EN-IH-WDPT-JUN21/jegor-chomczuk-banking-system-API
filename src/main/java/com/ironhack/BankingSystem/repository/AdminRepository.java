@@ -1,6 +1,6 @@
 package com.ironhack.BankingSystem.repository;
 
-import com.ironhack.BankingSystem.dao.users.Admin;
+import com.ironhack.BankingSystem.dao.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
