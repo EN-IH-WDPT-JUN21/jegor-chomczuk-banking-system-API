@@ -1,9 +1,9 @@
 package com.ironhack.BankingSystem.repository;
 
-import com.ironhack.BankingSystem.dao.Admin;
+import com.ironhack.BankingSystem.dao.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AdminRepository extends JpaRepository<Admin, Long> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
 }

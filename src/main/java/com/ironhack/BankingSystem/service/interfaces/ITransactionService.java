@@ -1,9 +1,9 @@
 package com.ironhack.BankingSystem.service.interfaces;
 
-import com.ironhack.BankingSystem.dao.CreditCard;
-import com.ironhack.BankingSystem.dao.Savings;
+import com.ironhack.BankingSystem.controller.dto.TransactionDTO;
+import com.ironhack.BankingSystem.utils.Money;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public interface ITransactionService {
-    CreditCard applyInterestRate(CreditCard creditCard);
-    Savings applyInterestRate(Savings savings);
+    Money transferMoney(UserDetails userDetails, TransactionDTO transactionDTO);
 }

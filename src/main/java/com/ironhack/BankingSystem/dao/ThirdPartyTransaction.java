@@ -1,25 +1,17 @@
 package com.ironhack.BankingSystem.dao;
 
 import com.ironhack.BankingSystem.utils.Money;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "third_party_transaction")
 public class ThirdPartyTransaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
@@ -29,11 +21,58 @@ public class ThirdPartyTransaction {
     @JoinColumn(name = "third_party_id")
     ThirdParty thirdParty;
 
-    @Column(name = "time_stamp")
     private LocalDateTime timeStamp;
 
     private Money amount;
 
-    public ThirdPartyTransaction(Account account, ThirdParty thirdParty, Money usd) {
+    public ThirdPartyTransaction(Account account, ThirdParty thirdParty, Money amount) {
+        this.account = account;
+        this.thirdParty = thirdParty;
+        this.amount = amount;
+        timeStamp = LocalDateTime.now();
+    }
+
+    public ThirdPartyTransaction() {
+        timeStamp = LocalDateTime.now();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public ThirdParty getThirdParty() {
+        return thirdParty;
+    }
+
+    public void setThirdParty(ThirdParty thirdParty) {
+        this.thirdParty = thirdParty;
+    }
+
+    public LocalDateTime getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(LocalDateTime timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public Money getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Money amount) {
+        this.amount = amount;
     }
 }

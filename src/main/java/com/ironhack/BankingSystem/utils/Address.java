@@ -1,23 +1,28 @@
 package com.ironhack.BankingSystem.utils;
 
 
-import org.hibernate.annotations.*;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Embeddable
 public class Address {
     @NotBlank(message = "Country required")
     private String country;
+
     @NotBlank(message = "City required")
     private String city;
+
     @NotBlank(message = "Str. name required")
     private String streetName;
+
     @Digits(integer = 4, fraction = 0, message = "Valid street number required")
     @Min(1)
     private int number;
-    @Pattern(regexp = "(\\d{5})", message = "Only valid Spanish zip numbers are accepted")
+
+   @Pattern(regexp="(\\d{5})", message = "Only valid Spanish zip numbers are accepted")
     @NotBlank(message = "Zip code required")
     private String zipCode;
 
@@ -29,6 +34,46 @@ public class Address {
         this.city = city;
         this.streetName = streetName;
         this.number = number;
+        this.zipCode = zipCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 }

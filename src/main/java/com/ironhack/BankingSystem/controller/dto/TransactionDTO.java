@@ -1,23 +1,21 @@
 package com.ironhack.BankingSystem.controller.dto;
 
 import com.ironhack.BankingSystem.utils.Money;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.*;
+import org.springframework.web.server.*;
 
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Pattern;
-import java.math.BigDecimal;
-import java.util.Currency;
+import javax.validation.constraints.*;
+import java.math.*;
+import java.util.*;
 
-@Setter
-@Getter
 public class TransactionDTO {
 
     private Long senderAccountId;
+
     private Long recipientAccountId;
+
     private String recipientName;
+
     private Money transactionAmount;
 
     public TransactionDTO(Long senderAccountId, Long recipientId, String recipientName, @DecimalMin(value = "0.01", message = "Amount must be above 0") BigDecimal amount, @Pattern(regexp = "(\\w{3})", message = "Please provide a valid currency") String currency) {
@@ -29,6 +27,40 @@ public class TransactionDTO {
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please provide a valid currency");
         }
+    }
 
+    public TransactionDTO() {
+    }
+
+    public Long getSenderAccountId() {
+        return senderAccountId;
+    }
+
+    public void setSenderAccountId(Long senderAccountId) {
+        this.senderAccountId = senderAccountId;
+    }
+
+    public String getRecipientName() {
+        return recipientName;
+    }
+
+    public void setRecipientName(String recipientName) {
+        this.recipientName = recipientName;
+    }
+
+    public Long getRecipientAccountId() {
+        return recipientAccountId;
+    }
+
+    public void setRecipientAccountId(Long recipientAccountId) {
+        this.recipientAccountId = recipientAccountId;
+    }
+
+    public Money getTransactionAmount() {
+        return transactionAmount;
+    }
+
+    public void setTransactionAmount(Money transactionAmount) {
+        this.transactionAmount = transactionAmount;
     }
 }
