@@ -1,9 +1,14 @@
 package com.ironhack.BankingSystem.service.interfaces;
 
-import org.springframework.security.core.userdetails.*;
+import com.ironhack.BankingSystem.controller.dto.AccountInfoDTO;
+import com.ironhack.BankingSystem.utils.Money;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 public interface IAccountService {
-    BigDecimal getBalance(Long accountId, UserDetails userDetails);
+    AccountInfoDTO getAccountById(Long id);
+    Money getBalanceById(Long id);
+    void updateBalance(Long accountId, Money money);
+    Money getBalance(Long accountId, UserDetails userDetails);
 }

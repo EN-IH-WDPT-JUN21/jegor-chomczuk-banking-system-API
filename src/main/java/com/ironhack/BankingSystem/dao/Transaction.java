@@ -1,21 +1,12 @@
 package com.ironhack.BankingSystem.dao;
 
 import com.ironhack.BankingSystem.utils.Money;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "transaction")
+@Table(name = "transactions")
 public class Transaction {
 
     @Id
@@ -23,19 +14,65 @@ public class Transaction {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @JoinColumn(name = "sender_account_id")
+    private Account sender;
 
-    @ManyToOne
-    @JoinColumn(name = "account_holder_id")
-    AccountHolder accountHolder;
+   @ManyToOne
+    @JoinColumn(name = "recipient_account_id")
+    private Account recipitent;
 
-    @Column(name="time_stamp")
     private LocalDateTime timeStamp;
 
-    @NotNull
     private Money amount;
 
-    public Transaction(Account senderAccount, Account recipientAccount, Money transactionAmount) {
+    public Transaction() {
+        timeStamp = LocalDateTime.now();
+    }
+
+    public Transaction(Account senderId, Account recipientId,  Money amount) {
+        this.sender = senderId;
+        this.recipitent = recipientId;
+        this.amount = amount;
+        timeStamp = LocalDateTime.now();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Account getSender() {
+        return sender;
+    }
+
+    public void setSender(Account sender) {
+        this.sender = sender;
+    }
+
+    public Account getRecipitent() {
+        return recipitent;
+    }
+
+    public void setRecipitent(Account recipitent) {
+        this.recipitent = recipitent;
+    }
+
+    public LocalDateTime getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(LocalDateTime timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public Money getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Money amount) {
+        this.amount = amount;
     }
 }

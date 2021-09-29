@@ -1,17 +1,12 @@
 package com.ironhack.BankingSystem.service.impl;
 
 import com.ironhack.BankingSystem.controller.dto.ThirdPartyTransactionDTO;
-import com.ironhack.BankingSystem.dao.Account;
-import com.ironhack.BankingSystem.dao.Checking;
-import com.ironhack.BankingSystem.dao.CreditCard;
-import com.ironhack.BankingSystem.dao.Savings;
+import com.ironhack.BankingSystem.dao.*;
 import com.ironhack.BankingSystem.interfaces.Freezable;
 import com.ironhack.BankingSystem.interfaces.Penalizable;
-import com.ironhack.BankingSystem.dao.ThirdPartyTransaction;
-import com.ironhack.BankingSystem.dao.ThirdParty;
 import com.ironhack.BankingSystem.repository.AccountRepository;
-import com.ironhack.BankingSystem.repository.ThirdPartyTransactionRepository;
 import com.ironhack.BankingSystem.repository.ThirdPartyRepository;
+import com.ironhack.BankingSystem.repository.ThirdPartyTransactionRepository;
 import com.ironhack.BankingSystem.service.interfaces.IThirdPartyService;
 import com.ironhack.BankingSystem.utils.Money;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +34,6 @@ public class ThirdPartyService implements IThirdPartyService {
     @Autowired
     ThirdPartyTransactionRepository thirdPartyTransactionRepository;
 
-
     PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public ThirdParty createThirdParty(ThirdParty thirdParty) {
@@ -48,14 +42,10 @@ public class ThirdPartyService implements IThirdPartyService {
         return thirdPartyRepository.save(thirdParty);
     }
 
-    public List<ThirdParty> getAllThirdPartyAccounts() {
-        return thirdPartyRepository.findAll();
-    }
-
     public void sendMoney(ThirdPartyTransactionDTO thirdPartyTransactionDTO) {
 
         Account account = evaluateAccounts(thirdPartyTransactionDTO);
-        account.setBalance(new Money(account.getBalance().getAmount().add(thirdPartyTransactionDTO.getAmount().getAmount()), account.getBalance().getCurrency()));
+        account.setBalance(new Money(account.getBalance().getAmount().add(thirdPartyTransactionDTO.getAmount()), account.getBalance().getCurrency()));
         if (account instanceof Checking) transactionService.applyMonthlyFee((Checking) account);
         if (account instanceof CreditCard) transactionService.applyInterestRate((CreditCard) account);
         if (account instanceof Savings) transactionService.applyInterestRate((Savings) account);
@@ -63,37 +53,36 @@ public class ThirdPartyService implements IThirdPartyService {
         thirdPartyTransactionRepository.save(new ThirdPartyTransaction(
                 account,
                 thirdPartyRepository.findById(thirdPartyTransactionDTO.getThirdPartyId()).get(),
-                new Money(thirdPartyTransactionDTO.getAmount().getAmount(), thirdPartyTransactionDTO.getCurrency() == null ? Currency.getInstance("USD") : thirdPartyTransactionDTO.getCurrency())
+                new Money(thirdPartyTransactionDTO.getAmount(), thirdPartyTransactionDTO.getCurrency() == null ? Currency.getInstance("USD") : thirdPartyTransactionDTO.getCurrency())
         ));
     }
 
     public void receiveMoney(ThirdPartyTransactionDTO thirdPartyTransactionDTO) {
         Account account = evaluateAccounts(thirdPartyTransactionDTO);
 
-        if (transactionService.enoughFunds(account, thirdPartyTransactionDTO.getAmount().getAmount())) {
+        if (transactionService.enoughFunds(account, thirdPartyTransactionDTO.getAmount())) {
             if (account instanceof Freezable) {
                 transactionService.checkStatus((Freezable) account);
                 transactionService.checkFraud((Freezable) account);
             }
             if (account instanceof Penalizable) {
-                transactionService.checkBalanceAndApplyExtraFeesThirdParty((Penalizable) account, thirdPartyTransactionDTO.getAmount().getAmount());
+                transactionService.checkBalanceAndApplyExtraFeesThirdParty((Penalizable) account, thirdPartyTransactionDTO.getAmount());
             }
 
             if (account instanceof Checking) transactionService.applyMonthlyFee((Checking) account);
             if (account instanceof CreditCard) transactionService.applyInterestRate((CreditCard) account);
             if (account instanceof Savings) transactionService.applyInterestRate((Savings) account);
 
-            account.setBalance(new Money(account.getBalance().getAmount().subtract(thirdPartyTransactionDTO.getAmount().getAmount()), account.getBalance().getCurrency()));
+            account.setBalance(new Money(account.getBalance().getAmount().subtract(thirdPartyTransactionDTO.getAmount()), account.getBalance().getCurrency()));
             accountRepository.save(account);
             thirdPartyTransactionRepository.save(new ThirdPartyTransaction(
                     account,
                     thirdPartyRepository.findById(thirdPartyTransactionDTO.getThirdPartyId()).get(),
-                    new Money(thirdPartyTransactionDTO.getAmount().getAmount().negate(), thirdPartyTransactionDTO.getCurrency() == null ? Currency.getInstance("USD") : thirdPartyTransactionDTO.getCurrency())
+                    new Money(thirdPartyTransactionDTO.getAmount().negate(), thirdPartyTransactionDTO.getCurrency() == null ? Currency.getInstance("USD") : thirdPartyTransactionDTO.getCurrency())
             ));
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not enough funds");
         }
-
     }
 
     private Account evaluateAccounts(ThirdPartyTransactionDTO thirdPartyTransactionDTO) {

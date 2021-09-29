@@ -1,43 +1,37 @@
 package com.ironhack.BankingSystem.dao;
 
-import com.ironhack.BankingSystem.interfaces.Freezable;
-import com.ironhack.BankingSystem.interfaces.Penalizable;
 import com.ironhack.BankingSystem.enums.Status;
+import com.ironhack.BankingSystem.interfaces.Freezable;
 import com.ironhack.BankingSystem.utils.Money;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class StudentChecking extends Account implements Freezable, Penalizable {
+@PrimaryKeyJoinColumn(name = "accountId")
+@Table(name = "student_checking_account")
+public class StudentChecking extends Account implements Freezable {
 
-    @Column(name="secret_key")
-    private String secretKey;
+    @Enumerated
+    private Status status;
 
-    private Money balance;
-
-    @Column(name="creation_date")
-    private LocalDateTime creationDate;
-
-    private Status status = Status.ACTIVE;
-
-    public StudentChecking(BigDecimal balance, String secretKey, com.ironhack.BankingSystem.dao.AccountHolder accountHolder, com.ironhack.BankingSystem.dao.AccountHolder secondaryAccountHolder) {
+    public StudentChecking() {
+        status = Status.ACTIVE;
     }
 
-    public StudentChecking(Money balance, String secretKey, com.ironhack.BankingSystem.dao.AccountHolder accountHolder, com.ironhack.BankingSystem.dao.AccountHolder secondaryAccountHolder) {
+    public StudentChecking(Money balance, String secretKey, @NotNull @Valid AccountHolder accountHolder, @Valid AccountHolder secondaryAccountHolder) {
+        super(balance, secretKey, accountHolder, secondaryAccountHolder);
     }
 
-    @Override
-    public Money getMinimumBalance() {
-        return null;
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

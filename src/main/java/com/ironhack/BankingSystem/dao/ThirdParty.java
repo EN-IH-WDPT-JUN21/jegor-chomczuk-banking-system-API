@@ -1,27 +1,48 @@
 package com.ironhack.BankingSystem.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class ThirdParty{
+@Table(name = "third_party")
+public class ThirdParty {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "hashed_key")
+    private String name;
+
     private String hashedKey;
 
-    public ThirdParty(@NotNull(message = "Hashed key required") String hashedKey) {
+    public ThirdParty(String name, String hashedKey) {
+        this.name = name;
         this.hashedKey = hashedKey;
+    }
+
+    public ThirdParty() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long thirdPartyId) {
+        this.id = thirdPartyId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getHashedKey() {
+        return hashedKey;
+    }
+
+    public void setHashedKey(String hashKey) {
+        this.hashedKey = hashKey;
     }
 }

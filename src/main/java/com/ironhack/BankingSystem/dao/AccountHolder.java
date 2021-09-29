@@ -2,36 +2,28 @@ package com.ironhack.BankingSystem.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ironhack.BankingSystem.utils.Address;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.*;
-import javax.validation.constraints.*;
-import java.time.*;
-import java.util.*;
+import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Setter
-@Getter
 @Table(name = "account_holders")
 @PrimaryKeyJoinColumn(name = "id")
-public class AccountHolder extends User {
+public class AccountHolder extends User{
 
     private LocalDateTime dateOfBirth;
 
     private String name;
-
     @Valid
     @Embedded
+
     private Address primaryAddress;
-
-    @Valid
     @Embedded
+    @Valid
     @AttributeOverrides({
             @AttributeOverride(name = "country", column = @Column(name = "mail_address_country")),
             @AttributeOverride(name = "city", column = @Column(name = "mail_address_city")),
@@ -42,7 +34,7 @@ public class AccountHolder extends User {
     private Address mailingAddress;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "accountHolder")
+    @OneToMany( mappedBy = "accountHolder")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Account> primaryAccounts;
 
@@ -55,7 +47,7 @@ public class AccountHolder extends User {
         super.setRole("ACCOUNT_HOLDER");
     }
 
-    public AccountHolder(String username, String password, String name, LocalDateTime dateOfBirth, Address address) {
+    public AccountHolder(String username,  String password,  String name, LocalDateTime dateOfBirth, Address address) {
         super(username, password);
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = address;
@@ -63,12 +55,60 @@ public class AccountHolder extends User {
         super.setRole("ACCOUNT_HOLDER");
     }
 
-    public AccountHolder(String username, String password, String name, LocalDateTime dateOfBirth, Address primaryAddress, @Valid Address mailingAddress) {
+    public AccountHolder( String username, String password,  String name,  LocalDateTime dateOfBirth,  Address primaryAddress, @Valid Address mailingAddress) {
         super(username, password);
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;
         this.mailingAddress = mailingAddress;
         this.name = name;
         super.setRole("ACCOUNT_HOLDER");
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDateTime getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDateTime dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Address getPrimaryAddress() {
+        return primaryAddress;
+    }
+
+    public void setPrimaryAddress(Address primaryAddress) {
+        this.primaryAddress = primaryAddress;
+    }
+
+    public Address getMailingAddress() {
+        return mailingAddress;
+    }
+
+    public void setMailingAddress(Address mailingAddress) {
+        this.mailingAddress = mailingAddress;
+    }
+
+    public List<Account> getPrimaryAccounts() {
+        return primaryAccounts;
+    }
+
+    public void setPrimaryAccounts(List<Account> primaryAccounts) {
+        this.primaryAccounts = primaryAccounts;
+    }
+
+    public List<Account> getSecondaryAccounts() {
+        return secondaryAccounts;
+    }
+
+    public void setSecondaryAccounts(List<Account> secondaryAccounts) {
+        this.secondaryAccounts = secondaryAccounts;
     }
 }
