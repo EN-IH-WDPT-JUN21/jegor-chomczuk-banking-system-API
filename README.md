@@ -28,21 +28,21 @@ insert into roles (id, role, user_id) values
 - password: 123456
 
 Available routes (by Admin):
-1. localhost:8080/admin/account/id/{id} - allows to get acount by id
-2. localhost:8080/admin/account/{id}/balance - allows to get balance by id
-3. localhost:8080/admin/account/{id}/balance - allows to update balance
-4. localhost:8080/admin/checking-accounts - allows to get all checking accounts
-5. localhost:8080/admin/checking-account/new/ - allows to create checking account
-6. localhost:8080/admin/checking-account/{id} - allows to update checking account
-7. localhost:8080/admin/savings-account/new - allows to create savings
-8. localhost:8080/admin/student-checking-account/new - allows to create student checking
-9. localhost:8080/admin/third-party-account/new - allows to create a Third Party
-10. localhost:8080/admin/credit-card/new - allows to create credit card
+1.  [GET]   /admin/account/id/{id} - allows to get acount by id
+2.  [GET]   /admin/account/{id}/balance - allows to get balance by id
+3.  [POST]  /admin/account/{id}/balance - allows to update balance
+4.  [GET]   /admin/checking-accounts - allows to get all checking accounts
+5.  [POST]  /admin/checking-account/new/ - allows to create checking account
+6.  [POST]  /admin/checking-account/{id} - allows to update checking account
+7.  [POST]  /admin/savings-account/new - allows to create savings
+8.  [POST]  /admin/student-checking-account/new - allows to create student checking
+9.  [POST]  /admin/third-party-account/new - allows to create a Third Party
+10. [POST]  /admin/credit-card/new - allows to create credit card
 
 Available routes (for Account Holders):
-1. localhost:8080/my-accounts/{id}/balance - allows to get balance of an account awned by an Account Holder
-2. localhost:8080/transfer - allows to send money by Account Holder
+1.  [GET]   /my-accounts/{id}/balance - allows to get balance of an account awned by an Account Holder
+2.  [POST]  /transfer - allows to send money by Account Holder
 
 Available routes (for all Users):
-1. localhost:8080/third-party/send-money - allows to send money
-2. localhost:8080/third-party/receive-money - allows to receive money
+1.  [POST]  /third-party/send-money - allows to send money
+2.  [POST]  /third-party/receive-money - allows to receive money
